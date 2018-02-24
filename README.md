@@ -11,3 +11,5 @@
 ![page outline](project-planning/page-outline.jpg)
 ###### Page project select view
 ![Page project select view](project-planning/page-project-select-view.jpg)
+###### Page Home Outline
+![Page Home Outline](project-planning/page-home-outline.jpg)
