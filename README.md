@@ -15,3 +15,7 @@
 ![Page Home Outline](project-planning/page-home-outline.jpg)
 ###### Page Project List Outline
 ![Page project list outline](project-planning/page-project-list-outline.jpg)
+###### Page About/Contact Outline
+![Page About/Contact Outline](project-planning/about-contact-page-outline.jpg)
+###### Profile Page Outline
+![Profile Page Outline](project-planning/profile-page-outline.jpg)
