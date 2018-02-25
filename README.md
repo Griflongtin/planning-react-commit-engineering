@@ -19,3 +19,5 @@
 ![Page About/Contact Outline](project-planning/about-contact-page-outline.jpg)
 ###### Profile Page Outline
 ![Profile Page Outline](project-planning/profile-page-outline.jpg)
+###### Page Login Outline
+![Page Login Outline](project-planning/page-login-outline.jpg)
