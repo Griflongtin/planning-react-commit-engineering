@@ -30,4 +30,8 @@
   * First Page view
   ![Page Login Outline](project-planning/page-login-outline.jpg)
   * Second Page view
-   
+  ![Page project list](project-planning/first-user-story-project-list.jpg)
+  * Third Page view
+  ![Page authentication](project-planning/authentication.jpg)
+  * Forth Page view
+  ![Page project select view](project-planning/page-project-select-view.jpg)
