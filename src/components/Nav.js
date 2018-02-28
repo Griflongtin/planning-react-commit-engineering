@@ -6,14 +6,7 @@ class Nav extends Component {
   render() {
     return (
       <div className="NavContainer">
-        <style jsx global>{`
-          :root {
-            --color1: rgba(1, 32, 63, 1);
-            --color2: rgba(55, 136, 204, 1);
-            --color3: rgba(0, 96, 193, 1);
-            --color4: rgba(23, 40, 68, 1);
-            --color5: rgba(4, 75, 142, 1);
-        }
+        <style jsx>{`
         .NavContainer {
           position: relative;
           width: 100%;
