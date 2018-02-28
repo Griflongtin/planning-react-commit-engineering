@@ -30,5 +30,4 @@
   * First Page view
   ![Page Login Outline](project-planning/page-login-outline.jpg)
   * Second Page view
-  ![Page Login Outline](project-planning/page-login-outline.jpg)
- 
+   
