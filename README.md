@@ -23,3 +23,12 @@
 ![Page Login Outline](project-planning/page-login-outline.jpg)
 > ### First File Tree Outline
 ![First File Tree Outline](project-planning/file-tree-number-one.jpg)
+
+### User Stores
+
+> 1. * The User should be able to login or signUp, then go to the ProjectList page where they can click on a project, and auth window should then prompt the user for the project password. if the password is correct it will open the project and the user can make a commit to it.
+  * First Page view
+  ![Page Login Outline](project-planning/page-login-outline.jpg)
+  * Second Page view
+  ![Page Login Outline](project-planning/page-login-outline.jpg)
+ 
