@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import UserLogIn from  './UserLogIn.js';
+// import UserLogIn from  './UserLogIn.js';
+import UserSignUp from  './UserSignUp.js';
 class UserForm extends Component {
   render() {
     return (
@@ -16,19 +17,19 @@ class UserForm extends Component {
             text-align: center;
           }
           .LOGIN {
+            background-color: var(--color5);
+            border-radius: 50px 50px 0 0;
+            width: 50%;
+            display: inline-block;
+            border: 3px solid black;
+          }
+          .SIGNUP {
             background-color: var(--color2);
             border-radius: 50px 50px 0 0;
             width: 50%;
             display: inline-block;
             border: 3px solid black;
             border-bottom-color: var(--color2);
-          }
-          .SIGNUP {
-            background-color: var(--color5);
-            border-radius: 50px 50px 0 0;
-            width: 50%;
-            display: inline-block;
-            border: 3px solid black;
           }
           .TabeText {
             padding: 7px 10px;
@@ -41,10 +42,11 @@ class UserForm extends Component {
           <div className="SIGNUP">
             <h3 className="TabeText">Sign Up</h3></div>
         </div>
-        <UserLogIn />
+        <UserSignUp />
       </div>
     );
   }
 }
+// <UserLogIn />
 
 export default UserForm;
