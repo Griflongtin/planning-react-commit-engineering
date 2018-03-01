@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import pipeTexter from './../assest/img/pipeTexter.jpg';
 import pipeValve from './../assest/img/pipeValve.png';
 
-class Nav extends Component {
-  render() {
-    return (
-      <div className="NavContainer">
-        <style jsx>{`
+function Nav() {
+  return (
+    <div className="NavContainer">
+      <style jsx>{`
         .NavContainer {
           position: relative;
           width: 100%;
@@ -69,32 +68,31 @@ class Nav extends Component {
           display: none;
         }
           `}</style>
-        <nav>
-          <div className="navLinksDiv">
-            <div className="Links">
-              <div className="{pageRoute = Home ? PipeSlider : PipeSlider}"></div>
-              <a className="navLinks">Home</a>
-            </div>
-            <div className="Links">
-              <div className="{pageRoute = Projects ? hide : PipeSlider}"></div>
-              <a className="navLinks">Projects</a>
-            </div>
-            <div className="Links">
-              <div className="{pageRoute = Profile ? hide : PipeSlider}"></div>
-              <a className="navLinks">Profile</a>
-            </div>
-            <div className="Links">
-              <div className="{pageRoute = About ?  hide : PipeSlider})"></div>
-              <a className="navLinks">About</a>
-            </div>
+      <nav>
+        <div className="navLinksDiv">
+          <div className="Links">
+            <div className="{pageRoute = Home ? PipeSlider : PipeSlider}"></div>
+            <a className="navLinks">Home</a>
           </div>
+          <div className="Links">
+            <div className="{pageRoute = Projects ? hide : PipeSlider}"></div>
+            <a className="navLinks">Projects</a>
+          </div>
+          <div className="Links">
+            <div className="{pageRoute = Profile ? hide : PipeSlider}"></div>
+            <a className="navLinks">Profile</a>
+          </div>
+          <div className="Links">
+            <div className="{pageRoute = About ?  hide : PipeSlider})"></div>
+            <a className="navLinks">About</a>
+          </div>
+        </div>
 
-        </nav>
-        <div className="PipeSlider1"></div>
-        <div className="PipeSlider2"></div>
-      </div>
-    );
-  }
+      </nav>
+      <div className="PipeSlider1"></div>
+      <div className="PipeSlider2"></div>
+    </div>
+  );
 }
 
 export default Nav;

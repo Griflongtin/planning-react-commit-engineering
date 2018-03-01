@@ -1,8 +1,20 @@
-import React, { Component } from 'react';
-// import Nav from './Nav';
+import React from 'react';
+import Nav from './Nav';
 import UserForm from './UserForm';
 
-class App extends Component {
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      LoggedIn: null,
+      signUpSelected: false
+    };
+    this.tabClick = this.tabClick.bind(this);
+  }
+  tabClick(){
+    this.setState({signUpSelected: !this.state.signUpSelected});
+  }
+
   render() {
     return (
       <div>
@@ -27,7 +39,10 @@ class App extends Component {
             align-items: center;
           }
       `}</style>
-        <div className="UserForm"><UserForm /></div>
+        {(this.state.LoggedIn) ? (<Nav />) :
+          (<div className="UserForm">
+            <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick}/>
+          </div>)}
       </div>
     );
   }
