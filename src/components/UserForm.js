@@ -37,11 +37,11 @@ class UserForm extends Component {
         <div className="tabs">
           <div className="LOGIN">
             <h3 className="TabeText">Log In</h3>
-            <UserLogIn />
           </div>
           <div className="SIGNUP">
             <h3 className="TabeText">Sign Up</h3></div>
         </div>
+        <UserLogIn />
       </div>
     );
   }
