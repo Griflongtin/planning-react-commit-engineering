@@ -1,12 +1,22 @@
 import React from 'react';
 import Nav from './Nav';
 import UserForm from './UserForm';
+import * as routes from '../constants/routes';
+import Landing from './Landing';
+import ProjectList from './ProjectList';
+import SelectedProject from './SelectedProject';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+
+// import { auth } from '../firebase';
 
 class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      LoggedIn: null,
+      authUser: null,
       signUpSelected: false
     };
     this.tabClick = this.tabClick.bind(this);
@@ -16,6 +26,13 @@ class App extends React.Component {
   }
 
   render() {
+    const signedIn = (
+      <Nav />);
+
+    const signIn = (<div className="UserForm">
+      <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick}/>
+    </div>);
+
     return (
       <div>
         <style jsx global>{`
@@ -39,10 +56,26 @@ class App extends React.Component {
             align-items: center;
           }
       `}</style>
-        {(this.state.LoggedIn) ? (<Nav />) :
-          (<div className="UserForm">
-            <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick}/>
-          </div>)}
+        <Router>
+          <div>
+            <Route
+              exact path={routes.LANDING}
+              component={() => <Landing />}
+            />
+            <Route
+              exact path={routes.PROJECT_LIST}
+              component={() => <ProjectList />}
+            />
+            <Route
+              exact path={routes.SELECTED_PROJECT}
+              component={() => <SelectedProject />}
+            />
+            <Route
+              exact path={routes}
+              component={() => <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick}/>}
+            />
+          </div>
+        </Router>
       </div>
     );
   }

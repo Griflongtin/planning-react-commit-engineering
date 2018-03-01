@@ -1,6 +1,9 @@
 import React from 'react';
 import pipeTexter from './../assest/img/pipeTexter.jpg';
 import pipeValve from './../assest/img/pipeValve.png';
+import { Link } from 'react-router-dom';
+import * as routes from '../constants/routes';
+
 
 function Nav() {
   return (
@@ -71,12 +74,12 @@ function Nav() {
       <nav>
         <div className="navLinksDiv">
           <div className="Links">
-            <div className="{pageRoute = Home ? PipeSlider : PipeSlider}"></div>
-            <a className="navLinks">Home</a>
+            <div className="{pageRoute = Home ? hide : PipeSlider}"></div>
+            <Link className="navLinks" to={routes.LANDING}>Home</Link>
           </div>
           <div className="Links">
             <div className="{pageRoute = Projects ? hide : PipeSlider}"></div>
-            <a className="navLinks">Projects</a>
+            <Link className="navLinks" to={routes.PROJECT_LIST}>Projects</Link>
           </div>
           <div className="Links">
             <div className="{pageRoute = Profile ? hide : PipeSlider}"></div>
