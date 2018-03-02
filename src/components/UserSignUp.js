@@ -34,7 +34,7 @@ class UserSignUp extends Component {
           <input
             className="Input"
             type='text'
-            placeholder="Your Name"
+            placeholder="Your Full Name"
           />
           <input
             className="Input"

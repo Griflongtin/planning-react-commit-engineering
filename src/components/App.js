@@ -1,6 +1,7 @@
 import React from 'react';
 import Nav from './Nav';
-import UserForm from './UserForm';
+import SignUpPage from './UserSignUpForm';
+import SignInPage from './UserLoginForm';
 import * as routes from '../constants/routes';
 import Landing from './Landing';
 import ProjectList from './ProjectList';
@@ -9,42 +10,13 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
-import { auth } from '../firebase';
-
-
-// import { auth } from '../firebase';
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
-});
 
 class App extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      authUser: null,
-      signUpSelected: false
-    };
-    this.tabClick = this.tabClick.bind(this);
-  }
-  tabClick(){
-    this.setState({signUpSelected: !this.state.signUpSelected});
-  }
-
-  userloginEventFunction(event){
-    auth.doSignInWithEmailAndPassword(event.email, event.password)
-      .catch(error => {
-        this.setState(byPropKey('error', error));
-      });
   }
 
   render() {
-    const signedIn = (
-      <Nav />);
-
-    const signIn = (<div className="UserForm">
-      <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick} logInAuth={this.userloginEventFunction}/>
-    </div>);
-
     return (
       <div>
         <style jsx global>{`
@@ -70,6 +42,7 @@ class App extends React.Component {
       `}</style>
         <Router>
           <div>
+            <Nav />
             <Route
               exact path={routes.LANDING}
               component={() => <Landing />}
@@ -83,8 +56,12 @@ class App extends React.Component {
               component={() => <SelectedProject />}
             />
             <Route
-              exact path={routes}
-              component={() => <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick}/>}
+              exact path={routes.USER_SIGN_UP_FORM}
+              component={() => <SignUpPage/>}
+            />
+            <Route
+              exact path={routes.USER_LOG_IN_FORM}
+              component={() => <SignInPage/>}
             />
           </div>
         </Router>

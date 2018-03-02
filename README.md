@@ -7,22 +7,30 @@
 
 
 ### Project Outline
+
 ###### Page Outline
-![page outline](project-planning/page-outline.jpg)
+>![page outline](project-planning/page-outline.jpg)
+
 ###### Page project select view
-![Page project select view](project-planning/page-project-select-view.jpg)
+>![Page project select view](project-planning/page-project-select-view.jpg)
+
 ###### Page Home Outline
-![Page Home Outline](project-planning/page-home-outline.jpg)
+>![Page Home Outline](project-planning/page-home-outline.jpg)
+
 ###### Page Project List Outline
-![Page project list outline](project-planning/page-project-list-outline.jpg)
+>![Page project list outline](project-planning/page-project-list-outline.jpg)
+
 ###### Page About/Contact Outline
-![Page About/Contact Outline](project-planning/about-contact-page-outline.jpg)
+>![Page About/Contact Outline](project-planning/about-contact-page-outline.jpg)
+
 ###### Profile Page Outline
-![Profile Page Outline](project-planning/profile-page-outline.jpg)
+>![Profile Page Outline](project-planning/profile-page-outline.jpg)
+
 ###### Page Login Outline
-![Page Login Outline](project-planning/page-login-outline.jpg)
-> ### First File Tree Outline
-![First File Tree Outline](project-planning/file-tree-number-one.jpg)
+> ![Page Login Outline](project-planning/page-login-outline.jpg)
+
+### First File Tree Outline
+> ![First File Tree Outline](project-planning/file-tree-number-one.jpg)
 
 ### User Stores
 
@@ -35,3 +43,5 @@
   ![Page authentication](project-planning/authentication.jpg)
   * Forth Page view
   ![Page project select view](project-planning/page-project-select-view.jpg)
+  ### State tree for the first user story
+  ![State tree for the first user story](project-planning/State-tree.jpg)
