@@ -92,7 +92,7 @@ class SignInForm extends Component {
             display: inline-block;
             border: 3px solid black;
           }
-          .SignUpTabSelected {
+          .LogInTatSelected {
             background-color: var(--color5);
             border: 3px solid black;
             border-bottom-color: var(--color5);
@@ -130,14 +130,14 @@ class SignInForm extends Component {
 
       `}</style>
       <div className="tabs">
-        <Link to={routes.USER_LOG_IN_FORM}>
-          <div className='LogInTatSelected'>
-            <h3 className="TabeText">Log In</h3>
+        <div className='LOGIN LogInTatSelected'>
+          <h3 className="TabeText">Log In</h3>
+        </div>
+        <Link to={routes.USER_SIGN_UP_FORM}>
+          <div className='SIGNUP'>
+            <h3 className="TabeText">Sign Up</h3>
           </div>
         </Link>
-        <div className='SIGNUP'>
-          <h3 className="TabeText">Sign Up</h3>
-        </div>
       </div>
       <div className="Logo">
         <LogInLogo />
