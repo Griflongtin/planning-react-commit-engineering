@@ -10,7 +10,6 @@ import SignUpLogo from './../assest/img/SignUpLogo';
 
 const SignUpPage = ({ history }) =>
   <div>
-    <h1>SignUp</h1>
     <SignUpForm history={history} />
   </div>
 

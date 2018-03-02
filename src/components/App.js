@@ -1,7 +1,7 @@
 import React from 'react';
 import Nav from './Nav';
 import SignUpPage from './UserSignUpForm';
-import UserLogIn from './UserLoginForm';
+import SignInPage from './UserLoginForm';
 import * as routes from '../constants/routes';
 import Landing from './Landing';
 import ProjectList from './ProjectList';
@@ -61,7 +61,7 @@ class App extends React.Component {
             />
             <Route
               exact path={routes}
-              component={() => <UserLogIn/>}
+              component={() => <SignInPage/>}
             />
           </div>
         </Router>
