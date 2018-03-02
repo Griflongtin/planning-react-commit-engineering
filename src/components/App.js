@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from './Nav';
-import UserForm from './UserForm';
+import UserLoginForm from './UserLoginForm';
 import * as routes from '../constants/routes';
 import Landing from './Landing';
 import ProjectList from './ProjectList';
@@ -38,13 +38,6 @@ class App extends React.Component {
   }
 
   render() {
-    const signedIn = (
-      <Nav />);
-
-    const signIn = (<div className="UserForm">
-      <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick} logInAuth={this.userloginEventFunction}/>
-    </div>);
-
     return (
       <div>
         <style jsx global>{`
@@ -69,6 +62,7 @@ class App extends React.Component {
           }
       `}</style>
         <Router>
+          <Nav />
           <div>
             <Route
               exact path={routes.LANDING}
@@ -84,7 +78,7 @@ class App extends React.Component {
             />
             <Route
               exact path={routes}
-              component={() => <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick}/>}
+              component={() => <UserLoginForm/>}
             />
           </div>
         </Router>
