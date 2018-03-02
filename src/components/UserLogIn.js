@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import LogInLogo from './../assest/img/LogInLogo';
 import { withRouter } from 'react-router-dom';
-import { auth } from '../firebase';
+import PropTypes from 'prop-types';
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -16,24 +16,13 @@ const INITIAL_STATE = {
 class UserLogIn extends Component {
   constructor(props) {
     super(props);
-
     this.state = { ...INITIAL_STATE };
   }
 
   onSubmit(event) {
-    const {
-      email,
-      password,
-    } = this.state;
-
-    auth.doSignInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-      })
-      .catch(error => {
-        this.setState(byPropKey('error', error));
-      });
-
+    const inputs = this.state;
+    alert(this.props.userloginEventFunction, inputs);
+    // this.props.userloginEventFunction;(inputs);
     event.preventDefault();
   }
 
@@ -102,5 +91,8 @@ class UserLogIn extends Component {
     );
   }
 }
+UserLogIn.propTypes = {
+  userloginEventFunction: PropTypes.func
+};
 
 export default withRouter(UserLogIn);

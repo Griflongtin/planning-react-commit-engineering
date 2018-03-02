@@ -51,13 +51,14 @@ function UserForm(props) {
           <h3 className="TabeText">Sign Up</h3>
         </div>
       </div>
-      { (props.signUpSelectedPass) ? <UserSignUp /> : <UserLogIn /> }
+      { (props.signUpSelectedPass) ? <UserSignUp /> : <UserLogIn userloginEventFunction={props.userloginEventFunction}/> }
     </div>
   );
 }
 UserForm.propTypes = {
   signUpSelectedPass: PropTypes.bool,
-  tabClicked: PropTypes.func
+  tabClicked: PropTypes.func,
+  userloginEventFunction: PropTypes.func
 };
 
 

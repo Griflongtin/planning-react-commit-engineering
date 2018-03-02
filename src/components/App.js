@@ -9,8 +9,13 @@ import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
+import { auth } from '../firebase';
+
 
 // import { auth } from '../firebase';
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value,
+});
 
 class App extends React.Component {
   constructor(props){
@@ -25,12 +30,19 @@ class App extends React.Component {
     this.setState({signUpSelected: !this.state.signUpSelected});
   }
 
+  userloginEventFunction(event){
+    auth.doSignInWithEmailAndPassword(event.email, event.password)
+      .catch(error => {
+        this.setState(byPropKey('error', error));
+      });
+  }
+
   render() {
     const signedIn = (
       <Nav />);
 
     const signIn = (<div className="UserForm">
-      <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick}/>
+      <UserForm signUpSelectedPass={this.state.signUpSelected} tabClicked={this.tabClick} logInAuth={this.userloginEventFunction}/>
     </div>);
 
     return (
