@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { auth } from '../firebase';
 import * as routes from '../constants/routes';
 
-const LogInPage = ({ history }) =>{
+const LogInPage({history}){
   <UserLogIn history={history}/>;};
 
 const byPropKey = (propertyName, value) => () => ({
@@ -24,7 +24,7 @@ class UserLogIn extends Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  onSubmit(event) {
+  onSubmit(event){
     const {
       email,
       password,

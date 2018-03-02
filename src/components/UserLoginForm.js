@@ -127,7 +127,7 @@ class UserLogIn extends Component {
           <div className='LOGIN' >
             <h3 className="TabeText">Log In</h3>
           </div>
-          <div className='SignUpTabSelected' onClick={history.push(routes.LANDING)} >
+          <div className='SignUpTabSelected'>
             <h3 className="TabeText">Sign Up</h3>
           </div>
         </div>
