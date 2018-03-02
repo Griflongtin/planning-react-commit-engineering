@@ -60,7 +60,7 @@ class App extends React.Component {
               component={() => <SignUpPage/>}
             />
             <Route
-              exact path={routes}
+              exact path={routes.USER_LOG_IN_FORM}
               component={() => <SignInPage/>}
             />
           </div>

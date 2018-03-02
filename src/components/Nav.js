@@ -70,6 +70,13 @@ function Nav() {
         .hide {
           display: none;
         }
+        .LoginNavButton {
+          position: absolute;
+          top: 50px;
+          left: 52px;
+          padding: 5px;
+          border: 2px solid black;
+        }
           `}</style>
       <nav>
         <div className="navLinksDiv">
@@ -93,7 +100,7 @@ function Nav() {
 
       </nav>
       <div className="PipeSlider1"></div>
-      <div className="PipeSlider2"></div>
+      <div className="PipeSlider2"><Link to={routes.USER_LOG_IN_FORM}><div className="LoginNavButton">LOGIN</div></Link></div>
     </div>
   );
 }
