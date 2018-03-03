@@ -44,4 +44,6 @@
   * Forth Page view
   ![Page project select view](project-planning/page-project-select-view.jpg)
   ### State tree for the first user story
-  ![State tree for the first user story](project-planning/State-tree.jpg)
+  ![State tree for the first user story](project-planning/State-tree-NVP.jpg)
+  ### Component tree for the first user story
+  ![COmponent tree for the first user story](project-planning/component-tree-NVP.jpg)
