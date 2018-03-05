@@ -1,9 +1,13 @@
 import React from 'react';
+import Commits from './Commits';
 
 function SelectedProject() {
-  <div>
-  SelectedProject
-  </div>;
+  return(
+    <div>
+      SelectedProject
+      <Commits />
+    </div>
+  );
 }
 
 export default SelectedProject;

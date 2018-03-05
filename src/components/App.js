@@ -39,30 +39,36 @@ class App extends React.Component {
             justify-content: center;
             align-items: center;
           }
+          .viewBox {
+            display: flex;
+            justify-content: center;
+          }
       `}</style>
         <Router>
           <div>
             <Nav />
-            <Route
-              exact path={routes.LANDING}
-              component={() => <Landing />}
-            />
-            <Route
-              exact path={routes.PROJECT_LIST}
-              component={() => <ProjectList />}
-            />
-            <Route
-              exact path={routes.SELECTED_PROJECT}
-              component={() => <SelectedProject />}
-            />
-            <Route
-              exact path={routes.USER_SIGN_UP_FORM}
-              component={() => <SignUpPage/>}
-            />
-            <Route
-              exact path={routes.USER_LOG_IN_FORM}
-              component={() => <SignInPage/>}
-            />
+            <div className="viewBox">
+              <Route
+                exact path={routes.LANDING}
+                component={() => <Landing />}
+              />
+              <Route
+                exact path={routes.PROJECT_LIST}
+                component={() => <ProjectList />}
+              />
+              <Route
+                exact path={routes.SELECTED_PROJECT}
+                component={() => <SelectedProject />}
+              />
+              <Route
+                exact path={routes.USER_SIGN_UP_FORM}
+                component={() => <SignUpPage/>}
+              />
+              <Route
+                exact path={routes.USER_LOG_IN_FORM}
+                component={() => <SignInPage/>}
+              />
+            </div>
           </div>
         </Router>
       </div>
