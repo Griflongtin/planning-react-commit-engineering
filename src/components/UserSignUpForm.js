@@ -14,7 +14,7 @@ const SignUpPage = ({ history }) =>
   </div>
 
   const INITIAL_STATE = {
-  username: '',
+  displayName: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
@@ -33,7 +33,7 @@ class SignUpForm extends Component {
 
   onSubmit = (event) => {
     const {
-      username,
+      displayName,
       email,
       passwordOne,
     } = this.state;
@@ -42,7 +42,7 @@ class SignUpForm extends Component {
       history,
     } = this.props;
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+    auth.doCreateUserWithEmailAndPassword(email, passwordOne, displayName)
       .then(authUser => {
         this.setState(() => ({ ...INITIAL_STATE }));
         history.push(routes.LANDING);
@@ -62,7 +62,7 @@ class SignUpForm extends Component {
 
   render() {
     const {
-      username,
+      displayName,
       email,
       passwordOne,
       passwordTwo,
@@ -73,7 +73,7 @@ class SignUpForm extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      username === '';
+      displayName === '';
 
     return (
       <div className="SignUpForm">
@@ -88,14 +88,14 @@ class SignUpForm extends Component {
             width: 100%;
             text-align: center;
           }
-          .SIGNUP {
+          .LogInTatSelected {
             background-color: var(--color2);
             border-radius: 50px 50px 0 0;
             width: 50%;
             display: inline-block;
             border: 3px solid black;
           }
-          .LogInTatSelected {
+          .SIGNUP {
             background-color: var(--color5);
             border: 3px solid black;
             border-bottom-color: var(--color5);
@@ -146,11 +146,11 @@ class SignUpForm extends Component {
       <form onSubmit={this.onSubmit}>
         <input
           className="Input"
-          value={username}
-          name='username'
+          value={displayName}
+          name='displayName'
           onChange={this.onFieldChange}
           type="text"
-          placeholder="Full Name"
+          placeholder="Username"
         />
         <input
           className="Input"
