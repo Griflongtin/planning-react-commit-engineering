@@ -25,9 +25,10 @@ class App extends Component {
       authUser
         ? this.setState(() => ({ authUser }))
         : this.setState(() => ({ authUser: null }));
-      console.log(authUser);
+      console.log(authUser.uid);
     });
   }
+
 
   render() {
     return (
@@ -59,15 +60,15 @@ class App extends Component {
       `}</style>
         <Router>
           <div>
-            <Nav authUser={this.state.authUser} />
-            <div className="viewBox">
+            {this.state.authUser ? <Nav authUser={this.state.authUser} /> : null }
+            {this.state.authUser ? <div className="viewBox">
               <Route
                 exact path={routes.LANDING}
                 component={() => <Landing />}
               />
               <Route
                 exact path={routes.PROJECT_LIST}
-                component={() => <ProjectList />}
+                component={() => <ProjectList authUser={this.state.authUser} />}
               />
               <Route
                 exact path={routes.SELECTED_PROJECT}
@@ -81,7 +82,20 @@ class App extends Component {
                 exact path={routes.USER_LOG_IN_FORM}
                 component={() => <SignInPage/>}
               />
-            </div>
+            </div> : <div className="viewBox">
+              <Route
+                exact path={routes.USER_SIGN_UP_FORM}
+                component={() => <SignUpPage/>}
+              />
+              <Route
+                exact path={routes.USER_LOG_IN_FORM}
+                component={() => <SignInPage/>}
+              />
+              <Route
+                exact path={routes}
+                component={() => <SignInPage/>}
+              />
+            </div>}
           </div>
         </Router>
       </div>

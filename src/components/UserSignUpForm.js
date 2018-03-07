@@ -14,7 +14,7 @@ const SignUpPage = ({ history }) =>
   </div>
 
   const INITIAL_STATE = {
-  displayName: '',
+  username: '',
   email: '',
   passwordOne: '',
   passwordTwo: '',
@@ -33,7 +33,7 @@ class SignUpForm extends Component {
 
   onSubmit = (event) => {
     const {
-      displayName,
+      username,
       email,
       passwordOne,
     } = this.state;
@@ -42,15 +42,15 @@ class SignUpForm extends Component {
       history,
     } = this.props;
 
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne, displayName)
+    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
+        authUser.updateProfile({displayName: username})
         this.setState(() => ({ ...INITIAL_STATE }));
         history.push(routes.LANDING);
       })
       .catch(error => {
         this.setState(byPropKey('error', error));
       });
-
     event.preventDefault();
   }
 
@@ -62,7 +62,7 @@ class SignUpForm extends Component {
 
   render() {
     const {
-      displayName,
+      username,
       email,
       passwordOne,
       passwordTwo,
@@ -73,7 +73,7 @@ class SignUpForm extends Component {
       passwordOne !== passwordTwo ||
       passwordOne === '' ||
       email === '' ||
-      displayName === '';
+      username === '';
 
     return (
       <div className="SignUpForm">
@@ -146,8 +146,8 @@ class SignUpForm extends Component {
       <form onSubmit={this.onSubmit}>
         <input
           className="Input"
-          value={displayName}
-          name='displayName'
+          value={username}
+          name='username'
           onChange={this.onFieldChange}
           type="text"
           placeholder="Username"
