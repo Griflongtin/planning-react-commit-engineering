@@ -127,7 +127,18 @@ const projectListPass = {
   },
 };
 
-function ProjectList() {
+function ProjectList(props) {
+  const selectedProjectHTML = <div className="ProjectListMasterDiv">
+    <h1 className="header">Selected Project</h1>
+    <div className="projectListChildDiv">
+      <div className="ProjectListDiv">
+        <p className="ProjectListDivContent">{props.selectedProjectPass ? projectListPass[props.selectedProjectPass].projectName : null }
+        </p>
+      </div>;
+      })}
+    </div>
+  </div>;
+
   const links = {
     textDecoration: 'none',
     color: 'black',
@@ -152,6 +163,7 @@ function ProjectList() {
             max-height: 396px;
             width: 85%;
             border: 1px solid white;
+            background-color: var(--color5);
           }
           .ProjectListDiv {
             font-size: 32px;
@@ -161,43 +173,55 @@ function ProjectList() {
             border: 1px solid white;
             margin: 0 auto;
           }
+          .ProjectListDiv:hover, .ProjectListDiv:hover::placeholder {
+            color: var(--color4);
+            background-color: var(--color3);
+          }
           .ProjectListDivContent {
             text-align: center;
           }
           .projectListChildDiv {
+            background-color: var(--color2);
             border: 1px solid white;
             width: 85%;
             overflow-y: scroll;
           }
           .Search {
+            color: red;
             text-align: center;
             width: 85%;
+          }
+          .header {
+            color: var(--color4);
+            padding: 0 0 15px 0;
           }
           ::-webkit-scrollbar {
             display: none;
           }
       `}</style>
       <div className="ProjectListMasterDiv">
-        <h1>Project List</h1>
+        <h1 className="header">Your Project List</h1>
         <div className="projectListChildDiv">
           <input
             className="ProjectListDiv Search"
             type="text"
             placeholder="SEARCH FOR PROJECT"/>
-          {Object.keys(projectListPass).map(function(projectId) {
+          {Object.keys(projectListPass).map((projectId) => {
             const project = projectListPass[projectId];
-            return<Link style={links} to={routes.SELECTED_PROJECT}><div className="ProjectListDiv">
+            return<div onClick={props.selectedProjectFunctionPass} className="ProjectListDiv">
               <p className="ProjectListDivContent">{project.projectName}</p>
-            </div>
-            </Link>;
+            </div>;
           })}
         </div>
       </div>
+      {props.selectedProjectPass ? selectedProjectHTML : null }
     </div>
   );
 }
 ProjectList.propTypes = {
-  projectListPass: PropTypes.object
+  projectListPass: PropTypes.object,
+  selectedProjectPass: PropTypes.string,
+  selectedProjectFunctionPass: PropTypes.func
 };
-
+// <Link style={links} to={routes.SELECTED_PROJECT}></Link>;
 export default withRouter(ProjectList);
