@@ -3,9 +3,10 @@ import pipeTexter from './../assest/img/pipeTexter.jpg';
 import pipeValve from './../assest/img/pipeValve.png';
 import { Link } from 'react-router-dom';
 import * as routes from '../constants/routes';
+import SignOut from './SignOut';
+import PropTypes from 'prop-types';
 
-
-function Nav() {
+function Nav(props) {
   return (
     <div className="NavContainer">
       <style jsx>{`
@@ -70,12 +71,18 @@ function Nav() {
         .hide {
           display: none;
         }
-        .LoginNavButton {
+        .LogNavButton {
           position: absolute;
           top: 50px;
           left: 52px;
           padding: 5px;
           border: 2px solid black;
+        }
+        .LogUserName {
+          display: flex;
+          justify-content: center;
+        
+
         }
           `}</style>
       <nav>
@@ -99,10 +106,13 @@ function Nav() {
         </div>
 
       </nav>
-      <div className="PipeSlider1"></div>
-      <div className="PipeSlider2"><Link to={routes.USER_LOG_IN_FORM}><div className="LoginNavButton">LOGIN</div></Link></div>
+      <div className="PipeSlider1">{ props.authUser ? <div className="LogNavButton"><SignOut /></div>  : null }</div>
+      <div className="PipeSlider2">{ props.authUser ? <div className="LogUserName">{props.authUser.displayName}</div> : <Link to={routes.USER_LOG_IN_FORM}><div className="LogNavButton">LOGIN</div></Link> }</div>
     </div>
   );
 }
+Nav.propTypes = {
+  authUser: PropTypes.any
+};
 
 export default Nav;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Nav from './Nav';
 import SignUpPage from './UserSignUpForm';
 import SignInPage from './UserLoginForm';
@@ -6,15 +6,24 @@ import * as routes from '../constants/routes';
 import Landing from './Landing';
 import ProjectList from './ProjectList';
 import SelectedProject from './SelectedProject';
+// import { firebase } from '../firebase';
 import {
   BrowserRouter as Router,
   Route,
 } from 'react-router-dom';
 
-class App extends React.Component {
-  constructor(props){
+class App extends Component {
+  constructor(props) {
     super(props);
   }
+  // componentDidMount() {
+  //   firebase.auth.onAuthStateChanged(authUser => {
+  //     authUser
+  //       ? this.setState(() => ({ authUser }))
+  //       : this.setState(() => ({ authUser: null }));
+  //   });
+  // }
+
 
   render() {
     return (

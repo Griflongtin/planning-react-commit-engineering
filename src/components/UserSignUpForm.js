@@ -44,13 +44,13 @@ class SignUpForm extends Component {
 
     auth.doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
+        authUser.updateProfile({displayName: username})
         this.setState(() => ({ ...INITIAL_STATE }));
         history.push(routes.LANDING);
       })
       .catch(error => {
         this.setState(byPropKey('error', error));
       });
-
     event.preventDefault();
   }
 
@@ -88,14 +88,14 @@ class SignUpForm extends Component {
             width: 100%;
             text-align: center;
           }
-          .SIGNUP {
+          .LogInTatSelected {
             background-color: var(--color2);
             border-radius: 50px 50px 0 0;
             width: 50%;
             display: inline-block;
             border: 3px solid black;
           }
-          .LogInTatSelected {
+          .SIGNUP {
             background-color: var(--color5);
             border: 3px solid black;
             border-bottom-color: var(--color5);
@@ -150,7 +150,7 @@ class SignUpForm extends Component {
           name='username'
           onChange={this.onFieldChange}
           type="text"
-          placeholder="Full Name"
+          placeholder="Username"
         />
         <input
           className="Input"
