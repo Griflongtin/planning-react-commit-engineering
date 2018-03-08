@@ -6,7 +6,7 @@ import * as routes from '../constants/routes';
 import Landing from './Landing';
 import ProjectList from './ProjectList';
 import SelectedProject from './SelectedProject';
-import { firebase } from '../firebase';
+// import { firebase } from '../firebase';
 import {
   BrowserRouter as Router,
   Route,
@@ -15,19 +15,14 @@ import {
 class App extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      authUser: null,
-    };
   }
-  componentDidMount() {
-    firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState(() => ({ authUser }))
-        : this.setState(() => ({ authUser: null }));
-      console.log(authUser.uid);
-    });
-  }
+  // componentDidMount() {
+  //   firebase.auth.onAuthStateChanged(authUser => {
+  //     authUser
+  //       ? this.setState(() => ({ authUser }))
+  //       : this.setState(() => ({ authUser: null }));
+  //   });
+  // }
 
 
   render() {
@@ -60,15 +55,15 @@ class App extends Component {
       `}</style>
         <Router>
           <div>
-            {this.state.authUser ? <Nav authUser={this.state.authUser} /> : null }
-            {this.state.authUser ? <div className="viewBox">
+            <Nav />
+            <div className="viewBox">
               <Route
                 exact path={routes.LANDING}
                 component={() => <Landing />}
               />
               <Route
                 exact path={routes.PROJECT_LIST}
-                component={() => <ProjectList authUser={this.state.authUser} />}
+                component={() => <ProjectList />}
               />
               <Route
                 exact path={routes.SELECTED_PROJECT}
@@ -82,20 +77,7 @@ class App extends Component {
                 exact path={routes.USER_LOG_IN_FORM}
                 component={() => <SignInPage/>}
               />
-            </div> : <div className="viewBox">
-              <Route
-                exact path={routes.USER_SIGN_UP_FORM}
-                component={() => <SignUpPage/>}
-              />
-              <Route
-                exact path={routes.USER_LOG_IN_FORM}
-                component={() => <SignInPage/>}
-              />
-              <Route
-                exact path={routes}
-                component={() => <SignInPage/>}
-              />
-            </div>}
+            </div>
           </div>
         </Router>
       </div>
