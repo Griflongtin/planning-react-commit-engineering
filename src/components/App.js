@@ -1,31 +1,30 @@
 import React, { Component } from 'react';
 import Nav from './Nav';
-import SignUpPage from './UserSignUpForm';
-import SignInPage from './UserLoginForm';
 import * as routes from '../constants/routes';
 import Landing from './Landing';
 import ProjectList from './ProjectList';
 import SelectedProject from './SelectedProject';
-// import { firebase } from '../firebase';
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import UserLogForm from './UserLogForm';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      loginUserTest: true,
+      loginProjectModal: true,
+      selectedProjectId: null
     };
+    this.handleloginUserTestChange = this.handleloginUserTestChange.bind(this);
+    this.selectedProjectHandle = this.selectedProjectHandle.bind(this);
   }
-  // componentDidMount() {
-  //   firebase.auth.onAuthStateChanged(authUser => {
-  //     authUser
-  //       ? this.setState(() => ({ authUser }))
-  //       : this.setState(() => ({ authUser: null }));
-  //   });
-  // }
+
+  handleloginUserTestChange() {
+    this.setState({loginUserTest: !this.state.loginUserTest});
+  }
+  selectedProjectHandle(projectId) {
+    this.setState({selectedProjectId: projectId});
+  }
 
 
   render() {
@@ -66,19 +65,15 @@ class App extends Component {
               />
               <Route
                 exact path={routes.PROJECT_LIST}
-                component={() => <ProjectList />}
+                component={() => <ProjectList selectedProjectId={this.state.selectedProjectId} selectedProjectHandle={this.selectedProjectHandle} loginProjectModalDisplay={this.state.loginProjectModal}/>}
               />
               <Route
                 exact path={routes.SELECTED_PROJECT}
                 component={() => <SelectedProject />}
               />
               <Route
-                exact path={routes.USER_SIGN_UP_FORM}
-                component={() => <SignUpPage/>}
-              />
-              <Route
-                exact path={routes.USER_LOG_IN_FORM}
-                component={() => <SignInPage/>}
+                exact path={routes.USER_LOG_FORMS}
+                component={() => <UserLogForm loginUserTest={this.state.loginUserTest} loginUserTestChange={this.handleloginUserTestChange}/>}
               />
             </div>
           </div>

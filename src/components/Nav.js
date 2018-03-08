@@ -81,7 +81,7 @@ function Nav(props) {
         .LogUserName {
           display: flex;
           justify-content: center;
-        
+
 
         }
           `}</style>
@@ -107,7 +107,7 @@ function Nav(props) {
 
       </nav>
       <div className="PipeSlider1">{ props.authUser ? <div className="LogNavButton"><SignOut /></div>  : null }</div>
-      <div className="PipeSlider2">{ props.authUser ? <div className="LogUserName">{props.authUser.displayName}</div> : <Link to={routes.USER_LOG_IN_FORM}><div className="LogNavButton">LOGIN</div></Link> }</div>
+      <div className="PipeSlider2">{ props.authUser ? <div className="LogUserName">{props.authUser.displayName}</div> : <Link to={routes.USER_LOG_FORMS}><div className="LogNavButton">LOGIN</div></Link> }</div>
     </div>
   );
 }
