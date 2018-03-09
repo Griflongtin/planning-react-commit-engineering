@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter,} from 'react-router-dom';
 import * as routes from '../constants/routes';
 import PropTypes from 'prop-types';
+import ProjectPaswordModal from './ProjectPaswordModal';
 
 
 const projectListPass = {
@@ -128,25 +129,30 @@ const projectListPass = {
 };
 
 function ProjectList(props) {
-  const selectedProjectHTML = <div className="ProjectListMasterDiv">
+  const selectedProjectHTML = <div>
     <h1 className="header">Selected Project</h1>
-    <div className="projectListChildDiv">
-      <div className="ProjectListDiv">
-        <p className="ProjectListDivContent">{props.selectedProjectPass ? projectListPass[props.selectedProjectPass].projectName : null }
-        </p>
-      </div>;
-      })}
+    <div>
+      <p>Project Name: {props.selectedProjectId ? projectListPass[props.selectedProjectId].projectName : null }</p>
+      <p>Project Group Name: {props.selectedProjectId ? projectListPass[props.selectedProjectId].projectGroupName : null }</p>
+      <p>Project Description: {props.selectedProjectId ? projectListPass[props.selectedProjectId].projectDescription : null }</p>
+      <button>Join Project</button>
+      {props.loginProjectModalDisplay ? <div className="showModal"><ProjectPaswordModal /></div> : null }
     </div>
   </div>;
 
-  const links = {
-    textDecoration: 'none',
-    color: 'black',
-  };
   return (
     <div className="ProjectListContainer">
       <style jsx>{`
+          .showModal {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+          }
           .ProjectListContainer {
+            position: relative;
             padding: 10px 0 0 0;
             width: 85%;
             display: flex;
@@ -208,20 +214,21 @@ function ProjectList(props) {
             placeholder="SEARCH FOR PROJECT"/>
           {Object.keys(projectListPass).map((projectId) => {
             const project = projectListPass[projectId];
-            return<div onClick={props.selectedProjectFunctionPass} className="ProjectListDiv">
+            return<div onClick={() => {props.selectedProjectHandle(projectId);}} className="ProjectListDiv">
               <p className="ProjectListDivContent">{project.projectName}</p>
             </div>;
           })}
         </div>
       </div>
-      {props.selectedProjectPass ? selectedProjectHTML : null }
+      {props.selectedProjectId ? selectedProjectHTML : null }
     </div>
   );
 }
 ProjectList.propTypes = {
   projectListPass: PropTypes.object,
-  selectedProjectPass: PropTypes.string,
-  selectedProjectFunctionPass: PropTypes.func
+  loginProjectModalDisplay: PropTypes.bool,
+  selectedProjectId: PropTypes.string,
+  selectedProjectHandle: PropTypes.func
 };
 // <Link style={links} to={routes.SELECTED_PROJECT}></Link>;
 export default withRouter(ProjectList);
