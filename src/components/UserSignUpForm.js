@@ -1,12 +1,83 @@
-import React from 'react';
+import React, { Component } from 'react';
+import {
+  Link,
+  withRouter,
+} from 'react-router-dom';
+
+import { auth } from '../firebase';
+import * as routes from '../constants/routes';
 import SignUpLogo from './../assest/img/SignUpLogo';
-import PropTypes from 'prop-types';
 
-function SignUpForm(props) {
+const SignUpPage = ({ history }) =>
+  <div>
+    <SignUpForm history={history} />
+  </div>
 
-  return (
-    <div className="SignUpForm">
-      <style jsx >{`
+  const INITIAL_STATE = {
+  username: '',
+  email: '',
+  passwordOne: '',
+  passwordTwo: '',
+  error: null,
+};
+
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value,
+});
+
+class SignUpForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { ...INITIAL_STATE };
+  }
+
+  onSubmit = (event) => {
+    const {
+      username,
+      email,
+      passwordOne,
+    } = this.state;
+
+    const {
+      history,
+    } = this.props;
+
+    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+      .then(authUser => {
+        authUser.updateProfile({displayName: username})
+        this.setState(() => ({ ...INITIAL_STATE }));
+        history.push(routes.LANDING);
+      })
+      .catch(error => {
+        this.setState(byPropKey('error', error));
+      });
+    event.preventDefault();
+  }
+
+  onFieldChange = (event) => {
+    const newValue = event.target.value
+    const name = event.target.name
+    this.setState(byPropKey(name, newValue))
+  }
+
+  render() {
+    const {
+      username,
+      email,
+      passwordOne,
+      passwordTwo,
+      error,
+    } = this.state;
+
+    const isInvalid =
+      passwordOne !== passwordTwo ||
+      passwordOne === '' ||
+      email === '' ||
+      username === '';
+
+    return (
+      <div className="SignUpForm">
+        <style jsx >{`
           .SignUpForm {
             width: 400px;
             height: 500px;
@@ -57,12 +128,13 @@ function SignUpForm(props) {
             border-radius: 30px;
             color: black;
           }
-
       `}</style>
       <div className="tabs">
-        <div onClick={props.loginUserTestChange} className='LogInTatSelected'>
-          <h3 className="TabeText">Log In</h3>
-        </div>
+        <Link to={routes.USER_LOG_IN_FORM}>
+          <div className='LogInTatSelected'>
+            <h3 className="TabeText">Log In</h3>
+          </div>
+        </Link>
         <div className='SIGNUP'>
           <h3 className="TabeText">Sign Up</h3>
         </div>
@@ -70,40 +142,53 @@ function SignUpForm(props) {
       <div className="Logo">
         <SignUpLogo />
       </div>
-      <form>
+      <form onSubmit={this.onSubmit}>
         <input
           className="Input"
+          value={username}
           name='username'
+          onChange={this.onFieldChange}
           type="text"
           placeholder="Username"
         />
         <input
           className="Input"
+          value={email}
           name='email'
+          onChange={this.onFieldChange}
           type="text"
           placeholder="Email Address"
         />
         <input
           className="Input"
+          value={passwordOne}
           name='passwordOne'
+          onChange={this.onFieldChange}
           type="password"
           placeholder="Password"
         />
         <input
           className="Input"
+          value={passwordTwo}
           name='passwordTwo'
+          onChange={this.onFieldChange}
           type="password"
           placeholder="Confirm Password"
         />
-        <button type="submit" className="SignUpButton">
-            Sign Up
+        <button disabled={isInvalid} type="submit" className="SignUpButton">
+          Sign Up
         </button>
+
+        { error && <p>{error.message}</p> }
+
       </form>
     </div>
-  );
+    );
+  }
 }
-SignUpForm.propTypes = {
-  loginUserTestChange: PropTypes.func
-};
 
-export default SignUpForm;
+export default withRouter(SignUpPage);
+
+export {
+  SignUpForm,
+};

@@ -35,9 +35,27 @@ function ProjectPaswordModal(props) {
           height: 40px;
           border-radius: 30px;
         }
+        .closeModalDiv {
+          position: relative;
+          width: 100%;
+          height: 30px;
+        }
+        .closeModal {
+          font-size: 30px;
+          position: absolute;
+          right: 2px;
+        }
+        p {
+          color: var(--color4);
+          text-align: center;
+        }
     `}</style>
       <div className="projectModalDiv">
-      
+        <div className="closeModalDiv">
+          <div className="closeModal" onClick={props.loginProjectModalDisplayToggle}>X</div>
+        </div>
+        <p>Project Name: {props.selectedProjectId ? props.projectListPass[props.selectedProjectId].projectName : null }</p>
+        <p>Project Group Name: {props.selectedProjectId ? props.projectListPass[props.selectedProjectId].projectGroupName : null }</p>
         <input
           className="Input"
           type="text"
@@ -55,7 +73,9 @@ function ProjectPaswordModal(props) {
 }
 ProjectPaswordModal.propTypes = {
   projectListPass: PropTypes.object,
-  selectedProjectId: PropTypes.string
+  selectedProjectId: PropTypes.string,
+  loginProjectModalDisplayToggle: PropTypes.func,
+
 };
 
 export default ProjectPaswordModal;

@@ -1,12 +1,73 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Link, withRouter,} from 'react-router-dom';
+import { auth } from '../firebase';
+import * as routes from '../constants/routes';
 import LogInLogo from './../assest/img/LogInLogo';
-import PropTypes from 'prop-types';
 
-function SignInForm(props) {
+const SignInPage = ({ history }) =>
+  <div>
+    <SignInForm history={history} />
+  </div>
 
-  return (
-    <div className="SignInContainer">
-      <style jsx >{`
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value,
+});
+
+const INITIAL_STATE = {
+  email: '',
+  password: '',
+  error: null,
+};
+
+class SignInForm extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { ...INITIAL_STATE };
+  }
+
+  onSubmit = (event) => {
+    const {
+      email,
+      password,
+    } = this.state;
+
+    const {
+      history,
+    } = this.props;
+
+    auth.doSignInWithEmailAndPassword(email, password)
+      .then(() => {
+        this.setState(() => ({ ...INITIAL_STATE }));
+        history.push(routes.LANDING);
+      })
+      .catch(error => {
+        this.setState(byPropKey('error', error));
+      });
+
+    event.preventDefault();
+  }
+
+  onFieldChange = (event) => {
+    const newValue = event.target.value
+    const name = event.target.name
+    this.setState(byPropKey(name, newValue))
+  }
+
+  render() {
+    const {
+      email,
+      password,
+      error,
+    } = this.state;
+
+    const isInvalid =
+      password === '' ||
+      email === '';
+
+    return (
+      <div className="SignInContainer">
+        <style jsx >{`
           .SignInContainer {
             width: 400px;
             height: 500px;
@@ -66,41 +127,51 @@ function SignInForm(props) {
             height: 40px;
             border-radius: 30px;
           }
-
       `}</style>
       <div className="tabs">
         <div className='LOGIN LogInTatSelected'>
           <h3 className="TabeText">Log In</h3>
         </div>
-        <div onClick={props.loginUserTestChange} className='SIGNUP'>
-          <h3 className="TabeText">Sign Up</h3>
-        </div>
+        <Link to={routes.USER_SIGN_UP_FORM}>
+          <div className='SIGNUP'>
+            <h3 className="TabeText">Sign Up</h3>
+          </div>
+        </Link>
       </div>
       <div className="Logo">
         <LogInLogo />
       </div>
-      <form>
+      <form onSubmit={this.onSubmit}>
         <input
           className="Input"
+          value={email}
           name='email'
+          onChange={this.onFieldChange}
           type="text"
           placeholder="Email Address"
         />
         <input
           className="Input"
+          value={password}
           name='password'
-          type='password'
+          onChange={this.onFieldChange}
+          type="password"
           placeholder="Password"
         />
-        <button type="submit" className="LoginButton">
-            Login
+        <button disabled={isInvalid} type="submit" className="LoginButton">
+          Sign Up
         </button>
+
+        { error && <p>{error.message}</p> }
+
       </form>
     </div>
-  );
+    );
+  }
 }
-SignInForm.propTypes = {
-  loginUserTestChange: PropTypes.func
-};
 
-export default SignInForm;
+export default withRouter(SignInPage);
+
+export {
+  SignInForm,
+};

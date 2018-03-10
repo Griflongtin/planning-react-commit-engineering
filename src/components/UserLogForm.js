@@ -1,20 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 import SignUpPage from './UserSignUpForm';
 import SignInPage from './UserLoginForm';
-import PropTypes from 'prop-types';
 
-function UserLogFrom(props) {
-  return (
-    <div>
-      <style jsx >{`
-      `}</style>
-      {props.loginUserTest ? <SignInPage loginUserTestChange={props.loginUserTestChange}/> :<SignUpPage loginUserTestChange={props.loginUserTestChange}/>}
-    </div>
-  );
-}
-UserLogFrom.propTypes = {
-  loginUserTest: PropTypes.bool,
-  loginUserTestChange: PropTypes.func
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value,
+});
+
+const INITIAL_STATE = {
+  username: '',
+  email: '',
+  password: '',
+  passwordTwo: '',
+  error: null,
 };
+
+class UserLogFrom extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { ...INITIAL_STATE };
+  }
+  render(){
+    return (
+      <div>
+        <style jsx >{`
+      `}</style>
+        {null ? <SignInPage/> :<SignUpPage/>}
+      </div>
+    );
+  }
+}
 
 export default UserLogFrom;
