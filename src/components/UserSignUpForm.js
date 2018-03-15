@@ -1,111 +1,12 @@
-import React, { Component } from 'react';
-import {
-  Link,
-  withRouter,
-} from 'react-router-dom';
-
-import { auth } from '../firebase';
-import * as routes from '../constants/routes';
+import React from 'react';
 import SignUpLogo from './../assest/img/SignUpLogo';
+import PropTypes from 'prop-types';
 
-const SignUpPage = ({ history }) =>
-  <div>
-    <SignUpForm history={history} />
-  </div>
+function SignUpFrom(props) {
 
-  const INITIAL_STATE = {
-  username: '',
-  email: '',
-  passwordOne: '',
-  passwordTwo: '',
-  error: null,
-};
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
-});
-
-class SignUpForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { ...INITIAL_STATE };
-  }
-
-  onSubmit = (event) => {
-    const {
-      username,
-      email,
-      passwordOne,
-    } = this.state;
-
-    const {
-      history,
-    } = this.props;
-
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
-      .then(authUser => {
-        authUser.updateProfile({displayName: username})
-        this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.LANDING);
-      })
-      .catch(error => {
-        this.setState(byPropKey('error', error));
-      });
-    event.preventDefault();
-  }
-
-  onFieldChange = (event) => {
-    const newValue = event.target.value
-    const name = event.target.name
-    this.setState(byPropKey(name, newValue))
-  }
-
-  render() {
-    const {
-      username,
-      email,
-      passwordOne,
-      passwordTwo,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      email === '' ||
-      username === '';
-
-    return (
-      <div className="SignUpForm">
-        <style jsx >{`
-          .SignUpForm {
-            width: 400px;
-            height: 500px;
-            background-color: var(--color5);
-            border: 3px solid black;
-          }
-          .tabs {
-            width: 100%;
-            text-align: center;
-          }
-          .LogInTatSelected {
-            background-color: var(--color2);
-            border-radius: 50px 50px 0 0;
-            width: 50%;
-            display: inline-block;
-            border: 3px solid black;
-          }
-          .SIGNUP {
-            background-color: var(--color5);
-            border: 3px solid black;
-            border-bottom-color: var(--color5);
-            border-radius: 50px 50px 0 0;
-            width: 50%;
-            display: inline-block;
-          }
-          .TabeText {
-            padding: 7px 10px;
-          }
+  return (
+    <div>
+      <style jsx >{`
           .SignUpContainer {
             width: 100%;
             height: 100%;
@@ -129,66 +30,60 @@ class SignUpForm extends Component {
             color: black;
           }
       `}</style>
-      <div className="tabs">
-        <Link to={routes.USER_LOG_IN_FORM}>
-          <div className='LogInTatSelected'>
-            <h3 className="TabeText">Log In</h3>
-          </div>
-        </Link>
-        <div className='SIGNUP'>
-          <h3 className="TabeText">Sign Up</h3>
-        </div>
-      </div>
       <div className="Logo">
         <SignUpLogo />
       </div>
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={props.handleOnSubmitSignUp}>
         <input
           className="Input"
-          value={username}
+          value={props.passState.username}
           name='username'
-          onChange={this.onFieldChange}
+          onChange={props.handleOnFieldChange}
           type="text"
           placeholder="Username"
         />
         <input
           className="Input"
-          value={email}
+          value={props.passState.email}
           name='email'
-          onChange={this.onFieldChange}
+          onChange={props.handleOnFieldChange}
           type="text"
           placeholder="Email Address"
         />
         <input
           className="Input"
-          value={passwordOne}
-          name='passwordOne'
-          onChange={this.onFieldChange}
+          value={props.passState.password}
+          name='password'
+          onChange={props.handleOnFieldChange}
           type="password"
           placeholder="Password"
         />
         <input
           className="Input"
-          value={passwordTwo}
+          value={props.passState.passwordTwo}
           name='passwordTwo'
-          onChange={this.onFieldChange}
+          onChange={props.handleOnFieldChange}
           type="password"
           placeholder="Confirm Password"
         />
-        <button disabled={isInvalid} type="submit" className="SignUpButton">
+        <button disabled={props.isInvalid} type="submit" className="SignUpButton">
           Sign Up
         </button>
 
-        { error && <p>{error.message}</p> }
+        { props.passState.error && <p>{props.passState.error.message}</p> }
 
       </form>
     </div>
-    );
-  }
+  );
 }
 
-export default withRouter(SignUpPage);
-
-export {
-  SignUpForm,
+SignUpFrom.propTypes = {
+  handleOnSubmitSignUp: PropTypes.func,
+  handleWitchUserLoginTab: PropTypes.func,
+  handleOnFieldChange: PropTypes.func,
+  passState: PropTypes.object,
+  isInvalid: PropTypes.bool
 };
+
+
+export default SignUpFrom;

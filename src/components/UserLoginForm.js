@@ -1,108 +1,11 @@
-import React, { Component } from 'react';
-import { Link, withRouter,} from 'react-router-dom';
-import { auth } from '../firebase';
-import * as routes from '../constants/routes';
+import React from 'react';
 import LogInLogo from './../assest/img/LogInLogo';
+import PropTypes from 'prop-types';
 
-const SignInPage = ({ history }) =>
-  <div>
-    <SignInForm history={history} />
-  </div>
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value,
-});
-
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
-};
-
-class SignInForm extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { ...INITIAL_STATE };
-  }
-
-  onSubmit = (event) => {
-    const {
-      email,
-      password,
-    } = this.state;
-
-    const {
-      history,
-    } = this.props;
-
-    auth.doSignInWithEmailAndPassword(email, password)
-      .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.LANDING);
-      })
-      .catch(error => {
-        this.setState(byPropKey('error', error));
-      });
-
-    event.preventDefault();
-  }
-
-  onFieldChange = (event) => {
-    const newValue = event.target.value
-    const name = event.target.name
-    this.setState(byPropKey(name, newValue))
-  }
-
-  render() {
-    const {
-      email,
-      password,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      password === '' ||
-      email === '';
-
-    return (
-      <div className="SignInContainer">
-        <style jsx >{`
-          .SignInContainer {
-            width: 400px;
-            height: 500px;
-            background-color: var(--color5);
-            border: 3px solid black;
-          }
-          .tabs {
-            width: 100%;
-            text-align: center;
-          }
-          .LOGIN {
-            background-color: var(--color2);
-            border-radius: 50px 50px 0 0;
-            width: 50%;
-            display: inline-block;
-            border: 3px solid black;
-          }
-          .SIGNUP {
-            background-color: var(--color2);
-            border-radius: 50px 50px 0 0;
-            width: 50%;
-            display: inline-block;
-            border: 3px solid black;
-          }
-          .LogInTatSelected {
-            background-color: var(--color5);
-            border: 3px solid black;
-            border-bottom-color: var(--color5);
-            border-radius: 50px 50px 0 0;
-            width: 50%;
-            display: inline-block;
-          }
-          .TabeText {
-            padding: 7px 10px;
-          }
+function SignInForm(props) {
+  return (
+    <div>
+      <style jsx >{`
           .LoginContainer {
             width: 100%;
             height: 100%;
@@ -128,50 +31,42 @@ class SignInForm extends Component {
             border-radius: 30px;
           }
       `}</style>
-      <div className="tabs">
-        <div className='LOGIN LogInTatSelected'>
-          <h3 className="TabeText">Log In</h3>
-        </div>
-        <Link to={routes.USER_SIGN_UP_FORM}>
-          <div className='SIGNUP'>
-            <h3 className="TabeText">Sign Up</h3>
-          </div>
-        </Link>
-      </div>
       <div className="Logo">
         <LogInLogo />
       </div>
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={props.handleOnSubmitLogin}>
         <input
           className="Input"
-          value={email}
+          value={props.passState.email}
           name='email'
-          onChange={this.onFieldChange}
+          onChange={props.handleOnFieldChange}
           type="text"
           placeholder="Email Address"
         />
         <input
           className="Input"
-          value={password}
+          value={props.passState.password}
           name='password'
-          onChange={this.onFieldChange}
+          onChange={props.handleOnFieldChange}
           type="password"
           placeholder="Password"
         />
-        <button disabled={isInvalid} type="submit" className="LoginButton">
+        <button disabled={props.isInvalid} type="submit" className="LoginButton">
           Sign Up
         </button>
 
-        { error && <p>{error.message}</p> }
+        { props.passState.error && <p>{props.passState.error.message}</p> }
 
       </form>
     </div>
-    );
-  }
+  );
 }
-
-export default withRouter(SignInPage);
-
-export {
-  SignInForm,
+SignInForm.propTypes = {
+  handleOnSubmitLogin: PropTypes.func,
+  handleWitchUserLoginTab: PropTypes.func,
+  handleOnFieldChange: PropTypes.func,
+  passState: PropTypes.object,
+  isInvalid: PropTypes.bool
 };
+
+export default SignInForm;

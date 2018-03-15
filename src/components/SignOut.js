@@ -1,4 +1,5 @@
 import React from 'react';
+import { auth } from '../firebase';
 
 const SignOut = () =>
   <div>
@@ -10,7 +11,8 @@ const SignOut = () =>
       `}</style>
     <button
       className="signOutButton"
-      type="button">
+      type="button"
+      onClick={auth.doSignOut}>
     Sign Out
     </button>
   </div>;

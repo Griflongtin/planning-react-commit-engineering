@@ -5,7 +5,7 @@ import Landing from './Landing';
 import ProjectList from './ProjectList';
 import SelectedProject from './SelectedProject';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import UserLogForm from './UserLogForm';
+import UserLogFromReturn from './UserLogForm';
 
 class App extends Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class App extends Component {
               />
               <Route
                 exact path={routes.USER_LOG_FORMS}
-                component={() => <UserLogForm loginUserTest={this.state.loginUserTest} loginUserTestChange={this.handleloginUserTestChange}/>}
+                component={() => <UserLogFromReturn />}
               />
             </div>
           </div>

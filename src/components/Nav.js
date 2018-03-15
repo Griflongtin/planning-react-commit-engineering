@@ -106,7 +106,7 @@ function Nav(props) {
         </div>
 
       </nav>
-      <div className="PipeSlider1">{ props.authUser ? <div className="LogNavButton"><SignOut /></div>  : null }</div>
+      <div className="PipeSlider1"><div className="LogNavButton"><SignOut /></div></div>
       <div className="PipeSlider2">{ props.authUser ? <div className="LogUserName">{props.authUser.displayName}</div> : <Link to={routes.USER_LOG_FORMS}><div className="LogNavButton">LOGIN</div></Link> }</div>
     </div>
   );
