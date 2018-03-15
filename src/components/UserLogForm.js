@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SignUpPage from './UserSignUpForm';
 import SignInPage from './UserLoginForm';
 import { Link, withRouter,} from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import * as routes from '../constants/routes';
 
 const UserLogFromReturn = ({ history }) =>
@@ -73,8 +73,17 @@ class UserLogFrom extends Component {
 
     auth.doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.LANDING);
+
+        // Create a user in your own accessible Firebase Database too
+        db.doCreateUser(authUser.uid, username, email)
+          .then(() => {
+            this.setState(() => ({ ...INITIAL_STATE }));
+            history.push(routes.LANDING);
+          })
+          .catch(error => {
+            this.setState(byPropKey('error', error));
+          });
+
       })
       .catch(error => {
         this.setState(byPropKey('error', error));
