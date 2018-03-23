@@ -170,6 +170,7 @@ function ProjectList(props) {
             width: 85%;
             border: 1px solid white;
             background-color: var(--color5);
+            min-height: 450px;
           }
           .ProjectListDiv {
             font-size: 32px;
@@ -201,17 +202,33 @@ function ProjectList(props) {
             color: var(--color4);
             padding: 0 0 15px 0;
           }
-          ::-webkit-scrollbar {
-            display: none;
+          ::-webkit-scrollbar-track
+          {
+          	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+          	border-radius: 10px;
+          	background-color: #F5F5F5;
+          }
+
+          ::-webkit-scrollbar
+          {
+          	width: 12px;
+          	background-color: #F5F5F5;
+          }
+
+          ::-webkit-scrollbar-thumb
+          {
+          	border-radius: 10px;
+          	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+          	background-color: #D62929;
           }
       `}</style>
       <div className="ProjectListMasterDiv">
         <h1 className="header">Your Project List</h1>
+        <input
+          className="ProjectListDiv Search"
+          type="text"
+          placeholder="SEARCH FOR PROJECT"/>
         <div className="projectListChildDiv">
-          <input
-            className="ProjectListDiv Search"
-            type="text"
-            placeholder="SEARCH FOR PROJECT"/>
           {Object.keys(projectListPass).map((projectId) => {
             const project = projectListPass[projectId];
             return<div onClick={() => {props.selectedProjectHandle(projectId);}} className="ProjectListDiv">

@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import sessionReducer from './session';
-import userReducer from './user';
+import usersReducer from './users';
+import projectsReducer from './projects';
 
 const rootReducer = combineReducers({
   sessionState: sessionReducer,
-  userState: userReducer,
+  userState: usersReducer,
+  projectState: projectsReducer,
 });
 
 export default rootReducer;

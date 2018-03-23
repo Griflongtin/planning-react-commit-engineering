@@ -63,7 +63,7 @@ const Nav = ({authUser}) =>
         .PipeSlider2 {
           position: absolute;
           top: -25px;
-          right: -1px;
+          right: 0px;
           background-image: url(${pipeValve});
           background-repeat: no-repeat;
           background-size: contain;
@@ -83,8 +83,6 @@ const Nav = ({authUser}) =>
         .LogUserName {
           display: flex;
           justify-content: center;
-
-
         }
           `}</style>
     <nav>
@@ -116,12 +114,7 @@ const Nav = ({authUser}) =>
         : null}
     </div>
     <div className="PipeSlider2">
-      {authUser ?
-        <div className="LogUserName">{authUser.email}</div>
-        :
-        <Link to={routes.USER_LOG_FORMS}>
-          <div className="LogNavButton">LOGIN</div>
-        </Link> }
+      <div className="LogUserName">{authUser.username}</div>
     </div>
   </div>;
 

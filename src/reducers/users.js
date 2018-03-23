@@ -1,19 +1,16 @@
 const INITIAL_STATE = {
-  user: {},
+  users: {},
 };
 
 const applySetUsers = (state, action) => ({
   ...state,
-  user: action.user
+  users: action.users
 });
 
 function usersReducer(state = INITIAL_STATE, action) {
   switch(action.type) {
   case 'USERS_SET' : {
     return applySetUsers(state, action);
-  }
-  case 'USER_SET' : {
-    return state;
   }
   default : return state;
   }
