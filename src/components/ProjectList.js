@@ -1,10 +1,13 @@
-import React from 'react';
-import { Link, withRouter,} from 'react-router-dom';
-import * as routes from '../constants/routes';
+import React, { Component } from 'react';
+// import { Link} from 'react-router-dom';
+// import * as routes from '../constants/routes';
 import PropTypes from 'prop-types';
 import ProjectPaswordModal from './ProjectPaswordModal';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
 
-
+import withAuthorization from './Session/withAuthorization';
+import { db } from '../firebase';
 const projectListPass = {
   askdjflaksdjf: {
     commits: ['lakjdflkasdasdadf', 'adfasddfjadfiaj','adfasdfjassdfjddfasdfjksadf'],
@@ -128,21 +131,21 @@ const projectListPass = {
   },
 };
 
-function ProjectList(props) {
-  const selectedProjectHTML = <div>
-    <h1 className="header">Selected Project</h1>
-    <div>
-      <p>Project Name: {props.selectedProjectId ? projectListPass[props.selectedProjectId].projectName : null }</p>
-      <p>Project Group Name: {props.selectedProjectId ? projectListPass[props.selectedProjectId].projectGroupName : null }</p>
-      <p>Project Description: {props.selectedProjectId ? projectListPass[props.selectedProjectId].projectDescription : null }</p>
-      <button>Join Project</button>
-      {props.loginProjectModalDisplay ? <div className="showModal"><ProjectPaswordModal /></div> : null }
-    </div>
-  </div>;
 
-  return (
-    <div className="ProjectListContainer">
-      <style jsx>{`
+class ProjectList extends Component {
+  componentDidMount() {
+    const { onSetUser } = this.props;
+    const { authUser } = this.props;
+
+    db.onceGetUser(authUser.uid).then(snapshot =>
+      onSetUser(snapshot.val())
+    );
+  }
+  render(){
+    const { loginProjectModalDisplay, selectedProjectId, selectedProjectHandle } = this.props;
+    return (
+      <div className="ProjectListContainer">
+        <style jsx>{`
           .showModal {
             position: absolute;
             width: 100%;
@@ -170,6 +173,7 @@ function ProjectList(props) {
             width: 85%;
             border: 1px solid white;
             background-color: var(--color5);
+            min-height: 450px;
           }
           .ProjectListDiv {
             font-size: 32px;
@@ -201,34 +205,72 @@ function ProjectList(props) {
             color: var(--color4);
             padding: 0 0 15px 0;
           }
-          ::-webkit-scrollbar {
-            display: none;
+          ::-webkit-scrollbar-track
+          {
+          	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+          	border-radius: 10px;
+          	background-color: #F5F5F5;
+          }
+
+          ::-webkit-scrollbar
+          {
+          	width: 12px;
+          	background-color: #F5F5F5;
+          }
+
+          ::-webkit-scrollbar-thumb
+          {
+          	border-radius: 10px;
+          	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+          	background-color: #D62929;
           }
       `}</style>
-      <div className="ProjectListMasterDiv">
-        <h1 className="header">Your Project List</h1>
-        <div className="projectListChildDiv">
+        <div className="ProjectListMasterDiv">
+          <h1 className="header">Find Your Group Project</h1>
           <input
             className="ProjectListDiv Search"
             type="text"
             placeholder="SEARCH FOR PROJECT"/>
-          {Object.keys(projectListPass).map((projectId) => {
-            const project = projectListPass[projectId];
-            return<div onClick={() => {props.selectedProjectHandle(projectId);}} className="ProjectListDiv">
-              <p className="ProjectListDivContent">{project.projectName}</p>
-            </div>;
-          })}
+          <div className="projectListChildDiv">
+            {Object.keys(projectListPass).map((projectId) => {
+              const project = projectListPass[projectId];
+              return<div onClick={() => {selectedProjectHandle(projectId);}} className="ProjectListDiv">
+                <p className="ProjectListDivContent">{project.projectName}</p>
+              </div>;
+            })}
+          </div>
         </div>
+        {selectedProjectId ? <div>
+          <h1 className="header">Selected Project</h1>
+          <div>
+            <p>Project Name: {selectedProjectId ? projectListPass[selectedProjectId].projectName : null }</p>
+            <p>Project Group Name: {selectedProjectId ? projectListPass[selectedProjectId].projectGroupName : null }</p>
+            <p>Project Description: {selectedProjectId ? projectListPass[selectedProjectId].projectDescription : null }</p>
+            <button>Join Project</button>
+            {loginProjectModalDisplay ? <div className="showModal"><ProjectPaswordModal /></div> : null }
+          </div>
+        </div> : null }
       </div>
-      {props.selectedProjectId ? selectedProjectHTML : null }
-    </div>
-  );
+    );
+  }
 }
 ProjectList.propTypes = {
-  projectListPass: PropTypes.object,
   loginProjectModalDisplay: PropTypes.bool,
   selectedProjectId: PropTypes.string,
   selectedProjectHandle: PropTypes.func
 };
-// <Link style={links} to={routes.SELECTED_PROJECT}></Link>;
-export default withRouter(ProjectList);
+const mapStateToProps = (state) => ({
+  user: state.userState.user,
+  authUser: state.sessionState.authUser
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSetUser: (user) => dispatch({ type: 'USER_SET', user }),
+});
+
+const authCondition = (authUser) => !!authUser;
+
+export default compose(
+  withAuthorization(authCondition),
+  connect(mapStateToProps, mapDispatchToProps)
+)(ProjectList);

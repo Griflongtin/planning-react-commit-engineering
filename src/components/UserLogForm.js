@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
 import SignUpPage from './UserSignUpForm';
 import SignInPage from './UserLoginForm';
-import { Link, withRouter,} from 'react-router-dom';
-import { auth } from '../firebase';
+import { withRouter,} from 'react-router-dom';
+import { auth, db } from '../firebase';
 import * as routes from '../constants/routes';
 
-const UserLogFromReturn = ({ history }) =>
-  <div>
-    <UserLogFrom history={history} />
+const UserLogFormReturn = ({ history }) =>
+  <div className="UserLogForm">
+    <style jsx >{`
+    .UserLogForm {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+  `}</style>
+    <UserLogForm history={history} />
   </div>
 
 const byPropKey = (propertyName, value) => () => ({
@@ -23,7 +31,7 @@ const INITIAL_STATE = {
   witchUserLoginTab: true,
 };
 
-class UserLogFrom extends Component {
+class UserLogForm extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
@@ -73,8 +81,17 @@ class UserLogFrom extends Component {
 
     auth.doCreateUserWithEmailAndPassword(email, password)
       .then(authUser => {
-        this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.LANDING);
+
+        // Create a user in your own accessible Firebase Database too
+        db.doCreateUser(authUser.uid, username, email)
+          .then(() => {
+            this.setState(() => ({ ...INITIAL_STATE }));
+            history.push(routes.LANDING);
+          })
+          .catch(error => {
+            this.setState(byPropKey('error', error));
+          });
+
       })
       .catch(error => {
         this.setState(byPropKey('error', error));
@@ -175,8 +192,8 @@ class UserLogFrom extends Component {
   }
 }
 
-export default withRouter(UserLogFromReturn);
+export default withRouter(UserLogFormReturn);
 
 export {
-  UserLogFrom,
+  UserLogForm,
 };

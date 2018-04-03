@@ -4,12 +4,14 @@ import pipeValve from './../assest/img/pipeValve.png';
 import { Link } from 'react-router-dom';
 import * as routes from '../constants/routes';
 import SignOut from './SignOut';
-import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import withAuthorization from './Session/withAuthorization';
 
-function Nav(props) {
-  return (
-    <div className="NavContainer">
-      <style jsx>{`
+
+const Nav = ({authUser}) =>
+  <div className="NavContainer">
+    <style jsx>{`
         .NavContainer {
           position: relative;
           width: 100%;
@@ -61,7 +63,7 @@ function Nav(props) {
         .PipeSlider2 {
           position: absolute;
           top: -25px;
-          right: -1px;
+          right: 0px;
           background-image: url(${pipeValve});
           background-repeat: no-repeat;
           background-size: contain;
@@ -81,38 +83,46 @@ function Nav(props) {
         .LogUserName {
           display: flex;
           justify-content: center;
-
-
         }
           `}</style>
-      <nav>
-        <div className="navLinksDiv">
-          <div className="Links">
-            <div className="{pageRoute = Home ? hide : PipeSlider}"></div>
-            <Link className="navLinks" to={routes.LANDING}>Home</Link>
-          </div>
-          <div className="Links">
-            <div className="{pageRoute = Projects ? hide : PipeSlider}"></div>
-            <Link className="navLinks" to={routes.PROJECT_LIST}>Projects</Link>
-          </div>
-          <div className="Links">
-            <div className="{pageRoute = Profile ? hide : PipeSlider}"></div>
-            <a className="navLinks">Profile</a>
-          </div>
-          <div className="Links">
-            <div className="{pageRoute = About ?  hide : PipeSlider})"></div>
-            <a className="navLinks">About</a>
-          </div>
+    <nav>
+      <div className="navLinksDiv">
+        <div className="Links">
+          <div className="{pageRoute = Home ? hide : PipeSlider}"></div>
+          <Link className="navLinks" to={routes.LANDING}>Home</Link>
         </div>
+        <div className="Links">
+          <div className="{pageRoute = Projects ? hide : PipeSlider}"></div>
+          <Link className="navLinks" to={routes.PROJECT_LIST}>Projects</Link>
+        </div>
+        <div className="Links">
+          <div className="{pageRoute = Profile ? hide : PipeSlider}"></div>
+          <a className="navLinks">Profile</a>
+        </div>
+        <div className="Links">
+          <div className="{pageRoute = About ?  hide : PipeSlider})"></div>
+          <a className="navLinks">About</a>
+        </div>
+      </div>
 
-      </nav>
-      <div className="PipeSlider1"><div className="LogNavButton"><SignOut /></div></div>
-      <div className="PipeSlider2">{ props.authUser ? <div className="LogUserName">{props.authUser.displayName}</div> : <Link to={routes.USER_LOG_FORMS}><div className="LogNavButton">LOGIN</div></Link> }</div>
+    </nav>
+    <div className="PipeSlider1">
+      {authUser ?
+        <div className="LogNavButton">
+          <SignOut />
+        </div>
+        : null}
     </div>
-  );
-}
-Nav.propTypes = {
-  authUser: PropTypes.any
-};
+    <div className="PipeSlider2">
+      <div className="LogUserName">{authUser.username}</div>
+    </div>
+  </div>;
 
-export default Nav;
+const mapStateToProps = (state) => ({
+  authUser: state.sessionState.authUser
+});
+const authCondition = (authUser) => !!authUser;
+
+export default compose(
+  withAuthorization(authCondition),
+  connect(mapStateToProps))(Nav);

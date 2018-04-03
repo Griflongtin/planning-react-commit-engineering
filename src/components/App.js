@@ -6,22 +6,18 @@ import ProjectList from './ProjectList';
 import SelectedProject from './SelectedProject';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import UserLogFromReturn from './UserLogForm';
+import withAuthentication from './Session/withAuthentication';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginUserTest: true,
       loginProjectModal: true,
       selectedProjectId: null
     };
-    this.handleloginUserTestChange = this.handleloginUserTestChange.bind(this);
     this.selectedProjectHandle = this.selectedProjectHandle.bind(this);
   }
 
-  handleloginUserTestChange() {
-    this.setState({loginUserTest: !this.state.loginUserTest});
-  }
   selectedProjectHandle(projectId) {
     this.setState({selectedProjectId: projectId});
   }
@@ -83,4 +79,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withAuthentication(App);

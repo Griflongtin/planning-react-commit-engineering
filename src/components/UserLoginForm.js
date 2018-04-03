@@ -52,7 +52,7 @@ function SignInForm(props) {
           placeholder="Password"
         />
         <button disabled={props.isInvalid} type="submit" className="LoginButton">
-          Sign Up
+          Sign In
         </button>
 
         { props.passState.error && <p>{props.passState.error.message}</p> }
