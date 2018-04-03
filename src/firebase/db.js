@@ -4,6 +4,7 @@ export const doCreateUser = (id, username, email) =>
   db.ref(`users/${id}`).set({
     username,
     email,
+    projects: [],
   });
 
 export const onceGetUsers = () =>
@@ -19,6 +20,9 @@ export const doCreateProject = (id, projectName, password, description, userId) 
     description,
     userId
   });
+
+export const onceGetProjects = () =>
+  db.ref('projects').once('value');
 
 export const onceGetProject = (id) =>
   db.ref(`projects/${id}`).once('value');

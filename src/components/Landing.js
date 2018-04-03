@@ -7,33 +7,33 @@ import { db } from '../firebase';
 
 class Landing extends Component {
   componentDidMount() {
-    const { onSetUsers } = this.props;
+    const { onSetUser } = this.props;
     const { authUser } = this.props;
 
     db.onceGetUser(authUser.uid).then(snapshot =>
-      onSetUsers(snapshot.val())
+      onSetUser(snapshot.val())
     );
   }
 
   render() {
-    const { users } = this.props;
+    const { user } = this.props;
     return (
       <div>
         <h1>Home</h1>
-        <h2>{users.username}</h2>
-        <h2>{users.email}</h2>
+        <h2>{user.username}</h2>
+        <h2>{user.email}</h2>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  users: state.userState.users,
+  user: state.userState.user,
   authUser: state.sessionState.authUser
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSetUsers: (users) => dispatch({ type: 'USERS_SET', users }),
+  onSetUser: (user) => dispatch({ type: 'USER_SET', user }),
 });
 
 const authCondition = (authUser) => !!authUser;
